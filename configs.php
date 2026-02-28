@@ -15,7 +15,9 @@ define('DB_NAME', $_ENV['DB_NAME']);
 define('DB_USER', $_ENV['DB_USER']);
 define('DB_PASS', $_ENV['DB_PASS']);
 
-define('BEARER_TOKEN', $_ENV['BEARER_TOKEN']);
+define('BASIC_TOKEN', $_ENV['BASIC_TOKEN']);
+define('JWT_SECRET_KEY', $_ENV['JWT_SECRET_KEY']);
+define('EXPIRED_TIME', 8 * 60 * 60); // 8 horas
 
 const ENDPOINT = array(
     'login' => [
@@ -34,6 +36,10 @@ const ENDPOINT = array(
         'dir' => '/app/public/api/validateSession.php',
         'method' => 'GET'
     ],
+    'email_validate' => [
+        'dir' => '/app/public/api/emailValidate.php',
+        'method' => 'GET'
+    ]
 );
 
 ?>
