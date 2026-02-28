@@ -1,0 +1,11 @@
+{
+    "name": "lucas/login",
+    "description": "API para login com autenticação em JWT e validação de seção.",
+    "version": "1.0.0",
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        }
+    },
+    "require": {}
+}
