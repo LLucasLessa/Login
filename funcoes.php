@@ -9,11 +9,10 @@ function validateJWT(string $token): array
             $token,
             new Key(JWT_SECRET_KEY, 'HS256')
         );
-
         return array('status' => 'success', 'data' => $decoded);
 
     } catch (\Firebase\JWT\ExpiredException $e) {
-        return array('status' => 'error', 'message' => 'Token expired');
+        return array('status' => 'error', 'message' => 'Token expired', 'new_token' => 'true');
 
     } catch (\Firebase\JWT\SignatureInvalidException $e) {
         return array('status' => 'error', 'message' => 'Invalid token signature');
@@ -32,7 +31,7 @@ function generateJWT(array $data): string
         'exp' => $expirationTime,
         'user_id' => $data['user_id'],
         'email' => $data['email'],
-        'password' => $data['pass']
+        'pass' => $data['pass']
     );
 
     return JWT::encode($payload, JWT_SECRET_KEY, 'HS256');

@@ -40,7 +40,7 @@ if($result['status'] === 'error') {
     $token = generateJWT([
         'user_id' => $user['id'],
         'email' => $data['email'],
-        'pass' => $data['password']
+        'pass' => $user['pass']
     ]);
 
     $db->update('users', array('token' => $token), "id = '".$user['id']."'");
