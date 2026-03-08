@@ -4,23 +4,12 @@ $db = new app\Database\Database();
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-if (!isset($data['name']) || !isset($data['email']) || !isset($data['password']) || !isset($data['confirm_password'])) {
-    http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'invalid input data']);
-    exit;
-}
-
-if($data['password'] !== $data['confirm_password']) {
-    http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'password and confirm password do not match']);
-    exit;
-}
-
-if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-    http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'Invalid email format']);
-    exit;
-}
+validateInputData([
+    'name' => $data['name'],
+    'email' => $data['email'],
+    'password' => $data['password'],
+    'confirm_password' => $data['confirm_password']
+]);
 
 $checkUser = $db->get('users', "email = '".$data['email']."'", "id", null, 1);
 
@@ -37,6 +26,8 @@ $user = $db->insert('users', array('name' => $data['name'], 'email' => $data['em
 $token = generateJWT(array('user_id' => $user, 'email' => $data['email'], 'pass' => $password));
 
 $db->update('users', array('token' => $token), "id = '".$user."'");
+
+sendEmail($data['email'], 'Bem-vindo ao ' . APP_NAME, bodyHTMLEmailValidation('Bem-vindo ao ' . APP_NAME, $data['name'], $token, $data['email']));
 
 http_response_code(200);
 echo json_encode([

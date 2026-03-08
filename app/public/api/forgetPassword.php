@@ -4,23 +4,11 @@ $db = new app\Database\Database();
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-if (!isset($data['email']) || !isset($data['new_password']) || !isset($data['confirm_password'])) {
-    http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'invalid input data']);
-    exit;
-}
-
-if($data['new_password'] !== $data['confirm_password']) {
-    http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'new password and confirm password do not match']);
-    exit;
-}
-
-if(!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-    http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'Invalid email format']);
-    exit;
-}
+validateInputData([
+    'email' => $data['email'],
+    'new_password' => $data['new_password'],
+    'confirm_password' => $data['confirm_password']
+]);
 
 $checkUser = $db->get('users', "email = '".$data['email']."'", "id, name", null, 1)[0];
 

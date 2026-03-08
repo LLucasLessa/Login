@@ -5,17 +5,10 @@ $db = new app\Database\Database();
 $JWT_TOKEN = $_GET['token'] ?? '';
 $user_id = $_GET['user_id'] ?? '';
 
-if (!$JWT_TOKEN) {
-    http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'Token is required']);
-    exit;
-}
-
-if (!$user_id) {
-    http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'User id is required']);
-    exit;
-}
+validateInputData([
+    'token' => $JWT_TOKEN,
+    'user_id' => $user_id
+]);
 
 $result = validateJWT($JWT_TOKEN);
 

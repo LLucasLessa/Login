@@ -15,6 +15,13 @@ define('DB_NAME', $_ENV['DB_NAME']);
 define('DB_USER', $_ENV['DB_USER']);
 define('DB_PASS', $_ENV['DB_PASS']);
 
+define('SMTP_HOST', $_ENV['SMTP_HOST']);
+define('SMTP_PORT', $_ENV['SMTP_PORT']);
+define('SMTP_USER', $_ENV['SMTP_USER']);
+define('SMTP_PASS', $_ENV['SMTP_PASS']);
+define('APP_NAME', "Login API");
+define('APP_URL', $_ENV['APP_URL']);
+
 define('BASIC_TOKEN', $_ENV['BASIC_TOKEN']);
 define('JWT_SECRET_KEY', $_ENV['JWT_SECRET_KEY']);
 define('EXPIRED_TIME', 8 * 60 * 60); // 8 horas
